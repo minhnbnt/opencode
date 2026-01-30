@@ -99,9 +99,9 @@ export function toolCallFromPart(tool: string, input: Record<string, unknown>): 
     case "shell":
     case "terminal": {
       const command = getCommand(input)
+      const description = getDescription(input)
       const cwd = str(input.cwd ?? input.workdir ?? input.workingDir ?? input.directory)
-      const parsed = ParseCommand.parse(command)
-      const result = ParseCommand.format(parsed, cwd)
+      const result = ParseCommand.format(command, description, cwd)
       return {
         title: result.title,
         kind: result.kind,

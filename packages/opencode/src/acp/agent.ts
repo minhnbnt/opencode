@@ -319,7 +319,6 @@ export namespace ACP {
 
               case "completed": {
                 const input = part.state.input
-                const info = toolCallFromPart(part.tool, input)
                 const result = toolResultFromPart(part.tool, input, part.state.output, false)
 
                 if (part.tool === "todowrite") {
@@ -358,7 +357,9 @@ export namespace ACP {
                       sessionUpdate: "tool_call_update",
                       toolCallId: part.callID,
                       status: "completed",
+                      content: result.content,
                       rawOutput: result.rawOutput,
+                      ...(result.title ? { title: result.title } : {}),
                     },
                   })
                   .catch((error) => {
@@ -379,7 +380,9 @@ export namespace ACP {
                       sessionUpdate: "tool_call_update",
                       toolCallId: part.callID,
                       status: "failed",
+                      content: result.content,
                       rawOutput: result.rawOutput,
+                      ...(result.title ? { title: result.title } : {}),
                     },
                   })
                   .catch((error) => {
@@ -841,7 +844,9 @@ export namespace ACP {
                     sessionUpdate: "tool_call_update",
                     toolCallId,
                     status: "completed",
+                    content: result.content,
                     rawOutput: result.rawOutput,
+                    ...(result.title ? { title: result.title } : {}),
                   },
                 })
                 .catch((err) => {
@@ -881,7 +886,9 @@ export namespace ACP {
                     sessionUpdate: "tool_call_update",
                     toolCallId,
                     status: "failed",
+                    content: result.content,
                     rawOutput: result.rawOutput,
+                    ...(result.title ? { title: result.title } : {}),
                   },
                 })
                 .catch((err) => {

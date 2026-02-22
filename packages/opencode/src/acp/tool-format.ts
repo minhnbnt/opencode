@@ -23,14 +23,6 @@ function truncate(str: string, max: number): string {
   return str.length > max ? str.substring(0, max - 3) + "..." : str
 }
 
-function escapeBackticks(str: string): string {
-  return str.replaceAll("`", "\\`")
-}
-
-function wrapBackticks(str: string): string {
-  return "`" + escapeBackticks(str) + "`"
-}
-
 function markdownEscape(text: string): string {
   let fence = "```"
   for (const match of text.matchAll(/^`{3,}/gm)) {
@@ -120,7 +112,6 @@ export function toolCallFromPart(tool: string, input: Record<string, unknown>): 
         rawInput: input,
       }
     }
-
 
     case "read":
     case "view": {
